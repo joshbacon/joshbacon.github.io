@@ -12,6 +12,7 @@
     --fs-large: max(30px, min(4vw, 4vh));
     --fs-medium: max(25px, min(3.5vw, 3.5vh));
     --fs-small: max(20px, min(2.5vw, 2.5vh));
+    --fs-ex-small: max(15px, min(2.5vw, 2.5vh));
     --fw-bold: 700;
     --fw-semi-bold: 500;
     --fw-regular: 300;
@@ -45,29 +46,34 @@ button {
 }
 
 h1 {
+    cursor: default;
     color: var(--text-primary);
     font-size: var(--fs-large);
     font-weight: var(--fw-bold);
 }
 
 h2 {
+    cursor: default;
     color: var(--text-primary);
     font-size: var(--fs-medium);
     font-weight: var(--fw-bold);
 }
 
 h3 {
+    cursor: default;
     color: var(--text-secondary);
     font-size: var(--fs-medium);
     font-weight: var(--fw-semi-bold);
 }
 
 h4 {
+    cursor: default;
     color: var(--text-primary);
     font-size: var(--fs-small);
 }
 
 p {
+    cursor: default;
     color: var(--text-secondary);
     font-size: var(--fs-small);
     font-weight: var(--fw-regular);
@@ -137,11 +143,54 @@ section {
     justify-content: center;
 }
 
+#main h1 {
+    position: relative;
+}
+
+#main h1:hover {
+    background: linear-gradient(90deg, var(--page-clr) 0%, var(--page-accent) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: spinGrid 2s repeat;
+}
+
+#main h1:hover:before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-position: 100%;
+    background: linear-gradient(90deg, var(--page-clr) 0%, var(--page-accent) 100% );
+    transform: translate3d(0px, 0px, 0) scale(1.1);
+    filter: blur(20px);
+    opacity: var(0.7);
+    transition: opacity 0.3s;
+    border-radius: inherit;
+    animation: spinGrid 2s repeat;
+}
+
+@keyframes spinGrad {
+    0% {
+        background: linear-gradient(90deg, var(--page-clr) 0%, var(--page-accent) 100%);
+    }
+    50% {
+        background: linear-gradient(180deg, var(--page-clr) 0%, var(--page-accent) 100%);
+    }
+    100% {
+        background: linear-gradient(90deg, var(--page-clr) 0%, var(--page-accent) 100%);
+    }
+
+}
+
 #main h3 {
     text-align: center;
 }
 
-#main::after{
+#main:after{
     content: '';
     z-index: -3;
     position: fixed;
@@ -154,7 +203,7 @@ section {
     opacity: 0.15;
 }
 
-#main::before {
+#main:before {
     content: '';
     z-index: -1;
     display: inline-block;
@@ -180,32 +229,36 @@ section {
     color: var(--text-primary);
 }
 
-#about a {
-    color: var(--text-primary);
+.resume-btn {
+    position: relative;
+    font-size: var(--fs-ex-small);
     text-decoration: none;
-    font-size: var(--fs-small);
-    padding: 0.5rem 1.5rem;
-    border-radius: .5rem;
-    border-bottom: 2px solid #E95C7F;
-    border-right: 2px solid  #E95C7F;
-    border-top: 2px solid white;
-    border-left: 2px solid white;
-    transition-duration: 1s;
-    transition-property: border-top, 
-        border-left, 
-        border-bottom,
-        border-right,
-        box-shadow,
-        color;
+    color: var(--text-primary);
+    background-image: linear-gradient(var(--page-clr) 49%, var(--page-accent) 51%);
+    overflow: hidden;
+    padding: 0.75rem 1.25rem;
+    border-radius: 2px;
+    transition: scale 1s ease-out;
 }
 
-#about a:hover {
-    border-top: 2px solid #E95C7F;
-    border-left: 2px solid #E95C7F;
-    border-bottom: 2px solid white;
-    border-right: 2px solid white;
-    box-shadow: #B6002DF0 5px 5px, #B6002DA6 10px 10px, #B6002D3E 15px 15px;
-    color: var(--page-clr);
+.resume-btn:hover {
+    scale: 1.05;
+}
+
+.resume-btn:after {
+    content: '';
+    width: 35%;
+    aspect-ratio: 1;
+    position: absolute;
+    bottom: -100%;
+    right: 10px;
+    rotate: -35deg;
+    background-image: url('../images/file.svg');
+    transition: bottom 1s ease-out;
+}
+
+.resume-btn:hover:after {
+    bottom: -20%;
 }
 
 .single-col {
@@ -225,17 +278,34 @@ section {
 }
 
 .skills-list {
+    position: relative;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 1rem;
-    max-width: 691px;
+    max-width: calc((85px + 1rem) * 8);
+}
+
+.skills-list img {
+    opacity: 0;
+    transform: translateY(5rem);
+    transition: opacity 0.6s ease-out, transform 1.2s ease-out;
+}
+
+.skills-list img.visible {
+    opacity: 1;
+    transform: none;
 }
 
 .skills-list img {
     width: min(15%, 85px);
     aspect-ratio: 1;
     color: var(--text-primary);
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .skills-list:hover img {
@@ -247,7 +317,58 @@ section {
     transform: scale(1.1);
 }
 
+.lang-desc {
+    position: absolute;
+    top: calc(100% + 15px);
+    text-align: center;
+    color: var(--text-primary);
+    background-color: var(--bg-clr);
+    border-radius: 15px;
+    opacity: 0;
+    transition: opacity;
+    padding: 5px;
+}
+
+.skill-react:hover + .react-desc {
+    opacity: 0.75;
+}
+
+.skill-js:hover + .js-desc {
+    opacity: 0.75;
+}
+
+.skill-html:hover + .html-desc {
+    opacity: 0.75;
+}
+
+.skill-css:hover + .css-desc {
+    opacity: 0.75;
+}
+
+.skill-flutter:hover + .flutter-desc {
+    opacity: 0.75;
+}
+
+.skill-godot:hover + .godot-desc {
+    opacity: 0.75;
+}
+
+.skill-python:hover + .python-desc {
+    opacity: 0.75;
+}
+
+.skill-java:hover + .java-desc {
+    opacity: 0.75;
+}
+
+.lang-desc p {
+    color: rgb(61, 111, 161);/*var(--text-primary); */
+    font-size: var(--fs-ex-small);
+    opacity: 1;
+}
+
 #projects {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
