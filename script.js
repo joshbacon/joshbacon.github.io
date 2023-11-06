@@ -20,8 +20,6 @@ $(document).on("scroll", async function() {
     ];
 
     let list = $(".skills-list");
-    console.log($(list).position().top);
-    console.log(pageBottom);
 
     if ($(list).position().top < pageBottom) {
         for (let s in skills) {
