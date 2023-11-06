@@ -148,42 +148,24 @@ section {
 }
 
 #main h1:hover {
-    background: linear-gradient(90deg, var(--page-clr) 0%, var(--page-accent) 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: spinGrid 2s repeat;
+    color: var(--page-clr);
+    text-shadow: 0px 0px 10px var(--page-clr);
+    animation: pulse 3s linear infinite;
 }
 
-#main h1:hover:before {
-    content: "";
-    z-index: -1;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-position: 100%;
-    background: linear-gradient(90deg, var(--page-clr) 0%, var(--page-accent) 100% );
-    transform: translate3d(0px, 0px, 0) scale(1.1);
-    filter: blur(20px);
-    opacity: var(0.7);
-    transition: opacity 0.3s;
-    border-radius: inherit;
-    animation: spinGrid 2s repeat;
-}
-
-@keyframes spinGrad {
+@keyframes pulse {
     0% {
-        background: linear-gradient(90deg, var(--page-clr) 0%, var(--page-accent) 100%);
+        color: var(--page-clr);
+        text-shadow: 0px 0px 10px var(--page-accent);
     }
     50% {
-        background: linear-gradient(180deg, var(--page-clr) 0%, var(--page-accent) 100%);
+        color: var(--page-accent);
+        text-shadow: 0px 0px 50px var(--page-clr);
     }
     100% {
-        background: linear-gradient(90deg, var(--page-clr) 0%, var(--page-accent) 100%);
+        color: var(--page-clr);
+        text-shadow: 0px 0px 10px var(--page-accent);
     }
-
 }
 
 #main h3 {
@@ -490,6 +472,30 @@ section {
 
 .mail {
     background-image: url('../images/email.svg');
+}
+
+@media (max-width: 450px) {
+    .featured-projects {
+        flex-direction: column;
+        align-items: center;
+    }
+    .feature-card {
+        flex-direction: column;
+        width: clamp(290px, 80vw, 450px);
+    }
+    .feature-card:before {
+        content: '';
+        width: 100%;
+        height: 25%;
+        position: absolute;
+        bottom: 0;
+        background-color: #171717;
+        opacity: 0.9;
+    }
+}
+
+@media (max-width: 500px) {
+    #links { gap: 0; }
 }
 
 @media (max-height: 320px) or (max-width: 1115px) {
