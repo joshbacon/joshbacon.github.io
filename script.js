@@ -34,11 +34,3 @@ $(document).on("scroll", async function() {
         }
     }
 });
-
-$(document).ready(function() {
-    
-})
-
-function baconSlide() {
-    
-}
